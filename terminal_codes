@@ -1,0 +1,19 @@
+
+-npm init -y   
+-npm i express 
+
+make an index file 
+-npm install express body-parser mysql
+-npm install nodemon
+-npm install cors
+
+-node index.js ->to run the server
+
+change package.json file's as bellow shown
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js",
+    "test": "echo\"Error: no test specified\" && exit 1"
+  },
+  
+-npm run devStart -> if we refresh the webpage its run the server again
