@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/show",(req,res)=>{
-    const sqlinsert = "SELECT * FROM users";
+    const sqlinsert = "SELECT * FROM department";
     db.query(sqlinsert,(err,result) => {
         res.send(result);
     });
@@ -27,7 +27,7 @@ app.get("/show",(req,res)=>{
 app.post("/register",(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
-    const sqlinsert = "INSERT INTO users (username,password) VALUES (?,?)";
+    const sqlinsert = "";
 
     db.query(sqlinsert,[username,password],(err,result) => {
         console.log(result);
