@@ -172,20 +172,22 @@ const registerUser = (req)=>{
 }
 
 const getUserByUsername = (username)=>{
-    sql = "SELECT * FROM user WHERE  username = ?;";
-    res = {
-        values: [],
-        status: true,
-    };  
-    db.query(sql, [username], function (error, results) {
-        if (error) {
-          console.log(error);
-          res.status = false;
-          return res;
-        }
-        res.values = results;
-        console.log(results);
-        return res;
+
+    return new Promise((resolve, reject) => {
+        sql = "SELECT * FROM user WHERE  username = ?;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [username], function (error, results) {
+            if (error) {
+            console.log(error);
+            res.status = false;
+            resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
     });
 }
 

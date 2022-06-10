@@ -9,7 +9,7 @@ const showAll = (req,res)=>{
     });
 }
 
-const registerEmployee = (req,res)=>{
+const registerEmployee = async (req,res)=>{
     const validation_result = validator.employee_signup(req);
 
     if (validation_result.status) {
@@ -19,25 +19,24 @@ const registerEmployee = (req,res)=>{
         });
     }
 
-    existingUser = users.getUserByUsername(req.body.username)
-    
+    existingUser = await users.getUserByUsername(req.body.username);
     if (existingUser.values.length < 1){
-        const regitrationStatus = users.registerUser(req)
-        console.log(regitrationStatus);
+        const regitrationStatus = users.registerUser(req);
         if (regitrationStatus.status === true){
             console.log("Successfully added user");
             return res.status(201).json({
-                message: "Successfully added user",
+                message: "Successfully added user"
             });
         }else{
             console.log("User registration failed");
             return res.status(201).json({
-                message: "User registration failed",
+                message: "User registration failed"
             });
         }
     } else {
+        console.log("Username already exists");
         return res.status(400).json({
-            message: "Username already exists",
+            message: "Username already exists"
         });
     }
 }
