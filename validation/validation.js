@@ -8,7 +8,8 @@ const employee_signup = (req) => {
 
   try {
     const username = req.body.username;
-    const password = req.body.password;
+    const password1 = req.body.password;
+    const password2 = req.body.con_password;
     const line1 = req.body.line1;
     const line2 = req.body.line2;
     const city = req.body.city;
@@ -34,7 +35,8 @@ const employee_signup = (req) => {
 
     if (
       validator.isEmpty(username) ||
-      validator.isEmpty(password) ||
+      validator.isEmpty(password1) ||
+      validator.isEmpty(password2) ||
       validator.isEmpty(line1) ||
       validator.isEmpty(line2)||
       validator.isEmpty(city) ||
@@ -111,6 +113,12 @@ const employee_signup = (req) => {
         result.status = true;
         return result;
     }
+    if (password1 != password2 ) {
+      result.message = "Passwords do not match";
+      result.status = true;
+      return result;
+  }
+
   } catch (error) {
     console.log(error.message, error.stack);
     result.message = "Input validation failed";

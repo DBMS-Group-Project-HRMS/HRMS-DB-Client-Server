@@ -172,7 +172,6 @@ const registerUser = (req)=>{
 }
 
 const getUserByUsername = (username)=>{
-
     return new Promise((resolve, reject) => {
         sql = "SELECT * FROM user WHERE  username = ?;";
         res = {
