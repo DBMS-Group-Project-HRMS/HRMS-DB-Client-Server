@@ -76,7 +76,7 @@ const employee_signup = (req) => {
     }
     if (
       !validator.isNumeric(phone_number1) &&
-      !validator.isLength(contact, { min: 10, max: 10 })
+      !validator.isLength(phone_number1, { min: 10, max: 10 })
     ) {
       result.message = "Invalid Contact Number 1";
       result.status = true;
@@ -84,7 +84,7 @@ const employee_signup = (req) => {
     }
     if (
         !validator.isNumeric(phone_number2) &&
-        !validator.isLength(contact, { min: 10, max: 10 })
+        !validator.isLength(phone_number1, { min: 10, max: 10 })
       ) {
         result.message = "Invalid Contact Number 2";
         result.status = true;
@@ -92,7 +92,7 @@ const employee_signup = (req) => {
       }
     if (
     !validator.isNumeric(emg_phone_number) &&
-    !validator.isLength(contact, { min: 10, max: 10 })
+    !validator.isLength(emg_phone_number, { min: 10, max: 10 })
     ) {
     result.message = "Invalid Emergency Contact Number";
     result.status = true;

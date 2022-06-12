@@ -190,7 +190,60 @@ const getUserByUsername = (username)=>{
     });
 }
 
+const getEmployee = (user_id)=>{
+    return new Promise((resolve, reject) => {
+        sql = `SELECT 
+                employee.firstname,
+                employee.lastname,
+                employee.birthday,
+                employee.email,
+                employee.salary,
+                employee.Joined_date,
+                employee.nic_number,
+                employee.photo,
+                employee.leave_count,
+                department.name,
+                maritalstatus.status,
+                address.line1,
+                address.line2,
+                address.city,
+                address.district,
+                address.postal_code,
+                emptype.type,
+                paygrade.paygrade,
+                empstatus.status,
+                emergencycontact.name,
+                emergencycontact.phone_number,
+                emergencycontact.relationship 
+                FROM \`user\` JOIN employee JOIN department JOIN maritalstatus JOIN address JOIN emptype JOIN paygrade JOIN empstatus JOIN emergencycontact ON 
+                \`user\`.id = employee.user_id AND 
+                department.id = employee.department AND 
+                maritalstatus.id = employee.maritalStatus AND 
+                address.id = employee.address AND 
+                emptype.id = employee.type AND 
+                paygrade.id = employee.paygrade AND 
+                empstatus.id = employee.empStatus AND 
+                emergencycontact.id = employee.emergency_contact  
+                WHERE \`user\`.id = ?;`;
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [parseInt(user_id)], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            console.log(results);
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     registerUser,
-    getUserByUsername
+    getUserByUsername,
+    getEmployee
 }
