@@ -10,7 +10,7 @@ const viewUser = async (req,res)=>{
         console.log("User found");
         return res.status(201).json({
             message: "User " + req.params.user_id + " found",
-            data: {...user.values[0], "phone1": phoneNums.values[0].phone_number, "phone2":phoneNums.values[1].phone_number}
+            data: {...user.values[0], "phone1_id": phoneNums.values[0].id, "phone1": phoneNums.values[0].phone_number, "phone2_id":phoneNums.values[1].id, "phone2":phoneNums.values[1].phone_number}
         });
     } else {
         return res.status(400).json({
@@ -90,19 +90,18 @@ const editUser = async (req,res)=>{
         });
     }
 
-    // const rupdateStatus = users.updateUser(req);
-    // if (rupdateStatus.status === true){
-    //     console.log("Successfully updated user details");
-    //     return res.status(201).json({
-    //         message: "Successfully updated user details"
-    //     });
-    // }else{
-    //     console.log("User details update failed");
-    //     return res.status(201).json({
-    //         message: "User details update failed"
-    //     });
-    // }
-    // console.log("*******************", req.body);
+    const rupdateStatus = users.updateUser(req);
+    if (rupdateStatus.status === true){
+        console.log("Successfully updated user details");
+        return res.status(201).json({
+            message: "Successfully updated user details"
+        });
+    }else{
+        console.log("User details update failed");
+        return res.status(201).json({
+            message: "User details update failed"
+        });
+    }
 }
 
 module.exports = {

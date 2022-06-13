@@ -208,6 +208,7 @@ const getEmployee = (user_id)=>{
                 department.id dept_id,
                 maritalstatus.status mar_status,
                 maritalstatus.id marital_id,
+                address.id address_id,
                 address.line1,
                 address.line2,
                 address.city,
@@ -219,6 +220,7 @@ const getEmployee = (user_id)=>{
                 paygrade.id paygrade_id,
                 empstatus.status,
                 empstatus.id empstatus_id,
+                emergencycontact.id emgcontact_id,
                 emergencycontact.name,
                 emergencycontact.phone_number,
                 emergencycontact.relationship 
@@ -307,7 +309,7 @@ const getEmployeeList = ()=>{
 
 const getPhoneNoByEmpId = (emp_id)=>{
     return new Promise((resolve, reject) => {
-        sql = `SELECT phone_number FROM phonenumber WHERE emp_id = ?`;
+        sql = `SELECT id, phone_number FROM phonenumber WHERE emp_id = ?`;
         res = {
             values: [],
             status: true,
@@ -344,152 +346,154 @@ const updateUser = (req)=>{
             return;
         }
 
-        db.query(sqlinsert_user,
+        const sqlupdate_emerg = `UPDATE emergencycontact SET 
+                                Name = ?, 
+                                Phone_number = ?, 
+                                Relationship = ? WHERE id = ?;`;
+        const name = req.body.name;
+        const phone_number = req.body.phone_number;
+        const relationship = req.body.relationship;
+        const emg_id = req.body.emgcontact_id;
+        db.query(sqlupdate_emerg,
             [
-                username,
-                password
+                name,
+                phone_number,
+                relationship,
+                emg_id
             ],(err,result) => {
                 if(err){
                     db.rollback();
-                    console.log("user table error", err);
+                    console.log("emergencycontact update failed", err);
                     res.status=false;
                     return;
-                }else{
-                    console.log(result);
-                    u_Id = result.insertId;
-
-                    const sqlinsert_address = "update address (Line1,Line2,City,District,Postal_Code) VALUES (?,?,?,?,?)";
-                    const line1 = req.body.line1;
-                    const line2 = req.body.line2;
-                    const city = req.body.city;
-                    const district = req.body.district;
-                    const postal_code = req.body.postal_code;
-                    db.query(sqlinsert_address,
-                        [
-                            line1,
-                            line2,
-                            city,
-                            district,
-                            postal_code
-                        ],(err,result) => {
-                            if(err){
-                                db.rollback();
-                                console.log("address error", err);
-                                res.status=false;
-                                return;
-                            }else{
-                                address_Id = result.insertId;
-                                const sqlinsert_emerg = "INSERT INTO emergencycontact (Name,Phone_number,Relationship) VALUES (?,?,?)";
-                                const name = req.body.EM_name;
-                                const phone_number = req.body.EM_phoneN;
-                                const relationship = req.body.EM_relation;
-                                db.query(sqlinsert_emerg,
-                                    [
-                                        name,
-                                        phone_number,
-                                        relationship
-                                    ],(err,result) => {
-                                        if(err){
-                                            db.rollback();
-                                            console.log("emergencycontact failed", err);
-                                            res.status=false;
-                                            return;
-                                        }else{
-                                            emergency_contact_Id = result.insertId;
-                
-                                            const sqlinsert_employee = "INSERT INTO employee (firstname,lastname,birthday,email,salary,Joined_date,nic_number,leave_count,department,maritalStatus,address,type,paygrade,empStatus,user_Id,emergency_contact) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-                                            const fisrtname = req.body.firstname;
-                                            const lastname = req.body.lastname;
-                                            const birthday = req.body.birthday;
-                                            const email = req.body.email;
-                                            const salary = req.body.salary;
-                                            const joined_date = req.body.joined_date;
-                                            const nic_number = req.body.nic_number;
-                                            const photo = "";
-                                            const leave_count = 0;
-                                            const department = req.body.department;//
-                                            const maritalStatus = req.body.marital_status;//
-                                            const address = address_Id; //
-                                            const emp_type = req.body.emp_type;//
-                                            const paygrade = req.body.paygrade;//
-                                            const empStatus = req.body.emp_status;//
-                                            const user_Id = u_Id; //
-                                            const emergency_contact = emergency_contact_Id; //                                    
-                                        
-                                            db.query(sqlinsert_employee,
-                                                [
-                                                    fisrtname,
-                                                    lastname,
-                                                    birthday,
-                                                    email,
-                                                    salary,
-                                                    joined_date,
-                                                    nic_number,
-                                                    leave_count,
-                                                    department,
-                                                    maritalStatus,
-                                                    address_Id,
-                                                    emp_type,
-                                                    paygrade,
-                                                    empStatus,
-                                                    u_Id,
-                                                    emergency_contact_Id
-                                                ],(err,result) => {
-                                                    if(err){
-                                                        db.rollback();
-                                                        console.log("employee error", err);
-                                                        res.status=false;
-                                                        return;
-                                                    }else{
-                                                        emplo_Id = result.insertId;
-                                                        const sqlinsert_phoneNumber = "INSERT INTO phonenumber (emp_ID,phone_number) VALUES (?,?)";
-                                                        const emp_ID = emplo_Id;
-                                                        const phone_number1 = req.body.phoneN1;
-                                                        const phone_number2 = req.body.phoneN2;
-                                                        db.query(sqlinsert_phoneNumber,
-                                                            [
-                                                                emp_ID,
-                                                                phone_number1
-                                                            ],(err,result) => {
-                                                                if(err){
-                                                                    db.rollback();
-                                                                    console.log("phone number error",err);
-                                                                    res.status=false;
-                                                                    return;
-                                                                } else {
-                                                                    db.query(sqlinsert_phoneNumber,
-                                                                        [
-                                                                            emp_ID,
-                                                                            phone_number2
-                                                                        ],(err,result) => {
-                                                                            if(err){
-                                                                                db.rollback();
-                                                                                console.log("phone number error", err);
-                                                                                res.status=false;
-                                                                                return;
-                                                                            } else {
-                                                                                db.commit(function (err) {
-                                                                                    if (err) {
-                                                                                      db.rollback();
-                                                                                      console.error("Commit error", err);
-                                                                                      res.status=false;
-                                                                                      return;
-                                                                                    }
-                                                                                    console.log("updation success!");                                                                                    
-                                                                                  });
-                                                                            }
-                                                                    });
-                                                                }
-                                                        });                                                                                                                
-                                                    }
-                                            });                                        
-                                        }                                    
-                                });                
-                            }            
-                    });
-                }     
+                }                                   
+        });  
+        
+        const sqlupdate_address = `UPDATE address SET 
+                                    Line1 = ?, 
+                                    Line2 = ?, 
+                                    City = ?, 
+                                    District = ?, 
+                                    Postal_Code = ? WHERE id = ?;`;
+        const line1 = req.body.line1;
+        const line2 = req.body.line2;
+        const city = req.body.city;
+        const district = req.body.district;
+        const postal_code = req.body.postal_code;
+        const address_id = req.body.address_id;
+        db.query(sqlupdate_address,
+            [
+                line1,
+                line2,
+                city,
+                district,
+                postal_code,
+                address_id
+            ],(err,result) => {
+                if(err){
+                    db.rollback();
+                    console.log("address update error", err);
+                    res.status=false;
+                    return;
+                }          
         });
+
+        const sqlupdate_employee = `UPDATE employee SET 
+                                    firstname = ?, 
+                                    lastname = ?, 
+                                    birthday = ?, 
+                                    email = ?, 
+                                    salary = ?, 
+                                    Joined_date = ?, 
+                                    nic_number = ?,  
+                                    department = ?, 
+                                    maritalStatus = ?, 
+                                    type = ?, 
+                                    paygrade = ?, 
+                                    empStatus = ?  
+                                    WHERE id = ?`;
+        const fisrtname = req.body.firstname;
+        const lastname = req.body.lastname;
+        const birthday = req.body.birthday;
+        const email = req.body.email;
+        const salary = req.body.salary;
+        const joined_date = req.body.Joined_date;
+        const nic_number = req.body.nic_number;
+        const photo = "";
+        const department = req.body.dept_id;//
+        const maritalStatus = req.body.marital_id;//
+        const emp_type = req.body.emptype_id;//
+        const paygrade = req.body.paygrade_id;//
+        const empStatus = req.body.empstatus_id;//  
+        const emp_id = req.body.empId;//                                   
+
+        db.query(sqlupdate_employee,
+            [
+                fisrtname,
+                lastname,
+                birthday,
+                email,
+                salary,
+                joined_date,
+                nic_number,
+                department,
+                maritalStatus,
+                emp_type,
+                paygrade,
+                empStatus,
+                emp_id
+            ],(err,result) => {
+                if(err){
+                    db.rollback();
+                    console.log("employee update error", err);
+                    res.status=false;
+                    return;
+                }
+        }); 
+
+        const sqlupdate_phoneNumber = "UPDATE phonenumber SET phone_number = ? WHERE id = ?";
+        const phone_number1 = req.body.phone1_id;
+        const phone_number2 = req.body.phone2_id;
+        const phone_number1_id = req.body.phone1_id;
+        const phone_number2_id = req.body.phone2_id;
+        db.query(sqlupdate_phoneNumber,
+            [
+                phone_number1,
+                phone_number1_id   
+            ],(err,result) => {
+                if(err){
+                    db.rollback();
+                    console.log("phone number update error",err);
+                    res.status=false;
+                    return;
+                }
+        });  
+
+        db.query(sqlupdate_phoneNumber,
+            [
+                phone_number2,
+                phone_number2_id
+            ],(err,result) => {
+                if(err){
+                    db.rollback();
+                    console.log("phone number update error", err);
+                    res.status=false;
+                    return;
+                }
+        });
+
+        db.commit(function (err) {
+            if (err) {
+                db.rollback();
+                console.error("Commit error", err);
+                res.status=false;
+                return;
+            }
+            console.log("updation success!");                                                                                    
+        });
+
     });
+
     return res;
 }
 
