@@ -75,7 +75,7 @@ const employee_signup = (req) => {
       return result;
     }
     if (
-      !validator.isNumeric(phone_number1) &&
+      !validator.isNumeric(phone_number1) ||
       !validator.isLength(phone_number1, { min: 10, max: 10 })
     ) {
       result.message = "Invalid Contact Number 1";
@@ -83,7 +83,7 @@ const employee_signup = (req) => {
       return result;
     }
     if (
-        !validator.isNumeric(phone_number2) &&
+        !validator.isNumeric(phone_number2) ||
         !validator.isLength(phone_number1, { min: 10, max: 10 })
       ) {
         result.message = "Invalid Contact Number 2";
