@@ -8,30 +8,30 @@ const employee_signup = (req) => {
 
   try {
     const username = req.body.username;
-    const password1 = req.body.password;
-    const password2 = req.body.con_password;
-    const line1 = req.body.line1;
-    const line2 = req.body.line2;
-    const city = req.body.city;
-    const district = req.body.district;
-    const postal_code = req.body.postal_code;
-    const emg_name = req.body.EM_name;
-    const emg_phone_number = req.body.EM_phoneN;
-    const relationship = req.body.EM_relation;
+    const password1 = req.body.password1;
+    const password2 = req.body.password2;
+    const line1 = req.body.Line1;
+    const line2 = req.body.Line2;
+    const city = req.body.City;
+    const district = req.body.District;
+    const postal_code = req.body.Postal_Code;
+    const emg_name = req.body.Name;
+    const emg_phone_number = req.body.phone_number;
+    const relationship = req.body.Relationship;
     const fisrtname = req.body.firstname;
     const lastname = req.body.lastname;
     const birthday = req.body.birthday;
     const email = req.body.email;
     const salary = req.body.salary;
-    const joined_date = req.body.joined_date;
+    const joined_date = req.body.Joined_date;
     const nic_number = req.body.nic_number;
     const department = req.body.department;
-    const maritalStatus = req.body.marital_status;
-    const emp_type = req.body.emp_type;
+    const maritalStatus = req.body.maritalStatus;
+    const emp_type = req.body.type;
     const paygrade = req.body.paygrade;
-    const empStatus = req.body.emp_status;
-    const phone_number1 = req.body.phoneN1;
-    const phone_number2 = req.body.phoneN2;
+    const empStatus = req.body.empStatus;
+    const phone_number1 = req.body.phonenumber1;
+    const phone_number2 = req.body.phonenumber2;
 
     if (
       validator.isEmpty(username) ||
@@ -52,11 +52,6 @@ const employee_signup = (req) => {
       validator.isEmpty(salary) ||
       validator.isEmpty(joined_date) ||
       validator.isEmpty(nic_number) ||
-      validator.isEmpty(department) ||
-      validator.isEmpty(maritalStatus) ||
-      validator.isEmpty(emp_type) ||
-      validator.isEmpty(paygrade) ||
-      validator.isEmpty(empStatus) ||
       validator.isEmpty(phone_number1) ||
       validator.isEmpty(phone_number2)
     ) {

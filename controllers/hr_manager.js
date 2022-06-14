@@ -11,6 +11,7 @@ const showAll = (req,res)=>{
 }
 
 const registerEmployee = async (req,res)=>{
+    console.log(req.body);
     const validation_result = validator.employee_signup(req);
 
     if (validation_result.status) {
@@ -36,7 +37,7 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    emptype = await getData.getEmpTypeById(req.body.emp_type);
+    emptype = await getData.getEmpTypeById(req.body.type);
     if (emptype.values.length < 1){
         console.log("Employee Type does not exists");
         return res.status(400).json({
@@ -49,7 +50,7 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    maritalstatus = await getData.getMaritalStatusById(req.body.marital_status);
+    maritalstatus = await getData.getMaritalStatusById(req.body.maritalStatus);
     if (maritalstatus.values.length < 1){
         console.log("Invalid marital status");
         return res.status(400).json({
@@ -65,7 +66,7 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    empstatus = await getData.getEmpStatusById(req.body.emp_status);
+    empstatus = await getData.getEmpStatusById(req.body.empStatus);
     if (empstatus.values.length < 1){
         console.log("Invalid employee status");
         return res.status(400).json({
