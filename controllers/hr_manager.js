@@ -82,7 +82,7 @@ const registerEmployee = async (req,res)=>{
         });
     }else{
         console.log("User registration failed");
-        return res.status(201).json({
+        return res.status(400).json({
             message: "User registration failed"
         });
     }
