@@ -10,6 +10,28 @@ const showAll = (req,res)=>{
     });
 }
 
+const assignSupervisor = async (req,re)=>{
+    console.log(req.body);
+    db.beginTransaction( err => {
+        if (err) {
+            console.error("Transaction failed", err);
+            res.status=false;
+            return;
+        }
+        const sql_insertSupervisor = "INSERT INTO `supervisor` (Emp_Id,Sup_Id) VALUES (?,?)";
+        const Emp_ID = req.body.Emp_ID;
+        const Sup_ID = req.body.Sup_ID;
+        console.log("empId,SupId: ",Emp_ID,Sup_ID);
+        db.query(sql_insertSupervisor,[Emp_ID,Sup_ID],(err,result) => {
+            if(err){
+                console.log(err)
+            }else{
+                console.log("Database ekata add wenna ayyoo",result);
+            }
+        });
+});
+}
+
 const registerEmployee = async (req,res)=>{
     console.log(req.body);
     const validation_result = validator.employee_signup(req);
@@ -90,5 +112,6 @@ const registerEmployee = async (req,res)=>{
 
 module.exports = {
     showAll,
-    registerEmployee
+    registerEmployee,
+    assignSupervisor
 }
