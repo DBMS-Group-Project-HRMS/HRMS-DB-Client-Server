@@ -49,7 +49,6 @@ const employee_signup = (req) => {
       validator.isEmpty(lastname) ||
       validator.isEmpty(birthday) ||
       validator.isEmpty(email) ||
-      validator.isEmpty(salary) ||
       validator.isEmpty(joined_date) ||
       validator.isEmpty(nic_number) ||
       validator.isEmpty(phone_number1) ||
@@ -112,7 +111,7 @@ const employee_signup = (req) => {
       result.message = "Passwords do not match";
       result.status = true;
       return result;
-  }
+    }
 
   } catch (error) {
     console.log(error.message, error.stack);
