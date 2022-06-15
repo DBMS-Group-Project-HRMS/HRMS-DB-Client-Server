@@ -176,7 +176,7 @@ const registerUser = async (req)=>{
 
 const getUserByUsername = (username)=>{
     return new Promise((resolve, reject) => {
-        sql = "SELECT * FROM user WHERE  username = ?;";
+        sql = "SELECT `user`.id, `user`.username, `user`.password, emptype.type FROM `user` JOIN employee JOIN emptype ON employee.type = emptype.id WHERE  username = ?;";
         res = {
             values: [],
             status: true,

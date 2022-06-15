@@ -7,6 +7,7 @@ const hrRoutes = require('./routes/hrRoutes');
 const managerRoutes = require('./routes/managerRoutes');
 const supervisorRoutes = require('./routes/supervisorRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ const port = process.env.PORT || 3001;
 app.use('/hr', hrRoutes);
 app.use('/manager', managerRoutes);
 app.use('/supervisor', supervisorRoutes);
+app.use('/user', userRoutes);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
