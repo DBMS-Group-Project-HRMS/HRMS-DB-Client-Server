@@ -96,7 +96,7 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    const regitrationStatus = users.registerUser(req);
+    const regitrationStatus = await users.registerUser(req);
     if (regitrationStatus.status === true){
         console.log("Successfully added user");
         return res.status(201).json({

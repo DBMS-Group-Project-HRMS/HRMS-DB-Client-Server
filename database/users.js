@@ -2,7 +2,7 @@ const db = require('./db_helper');
 const enc = require('../middleware/encryptionHandler');
 
 const registerUser = async (req)=>{
-
+    return new Promise((resolve, reject) => {
     var address_Id="";
     var u_Id="";
     var emergency_contact_Id="";
@@ -171,7 +171,8 @@ const registerUser = async (req)=>{
                 }     
         });
     });
-    return res;
+    resolve(res);
+    });
 }
 
 const getUserByUsername = (username)=>{
