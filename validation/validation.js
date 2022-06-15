@@ -112,7 +112,7 @@ const employee_signup = (req) => {
       result.message = "Passwords do not match";
       result.status = true;
       return result;
-  }
+    }
 
   } catch (error) {
     console.log(error.message, error.stack);

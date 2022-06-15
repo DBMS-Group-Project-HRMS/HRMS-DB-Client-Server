@@ -1,6 +1,7 @@
 const db = require('./db_helper');
+const enc = require('../middleware/encryptionHandler');
 
-const registerUser = (req)=>{
+const registerUser = async (req)=>{
 
     var address_Id="";
     var u_Id="";
@@ -14,7 +15,7 @@ const registerUser = (req)=>{
         status: true,
     };
 
-    db.beginTransaction( err => {
+    db.beginTransaction( async (err) => {
         if (err) {
             console.error("Transaction failed", err);
             res.status=false;
@@ -23,11 +24,11 @@ const registerUser = (req)=>{
 
         const sqlinsert_user = "INSERT INTO `user` (username,password) VALUES (?,?)";
         const username = data.username;
-        const password = data.password1;
+        const hashed_password = await enc.encryptCredential(data.password1);
         db.query(sqlinsert_user,
             [
                 username,
-                password
+                hashed_password
             ],(err,result) => {
                 if(err){
                     db.rollback();
