@@ -22,7 +22,10 @@ app.use('/manager', managerRoutes);
 app.use('/supervisor', supervisorRoutes);
 app.use('/user', userRoutes);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => {
+console.log("Database Connected...")
+console.log(`Listening on port ${port}`)
+});
 
 app.get("/getHRMSdetails",(req,res)=>{
     var selectDetails=[];
