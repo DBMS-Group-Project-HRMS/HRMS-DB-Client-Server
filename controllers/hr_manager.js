@@ -26,7 +26,22 @@ const assignSupervisor = async (req,re)=>{
             if(err){
                 console.log(err)
             }else{
-                console.log("Database ekata add wenna ayyoo",result);
+                const sql_insertSupervisor = "UPDATE employee SET paygrade=2 WHERE id = ?";
+                db.query(sql_insertSupervisor,[Sup_ID],(err,result) => {
+                    if(err){
+                        console.log(err)
+                    }else{
+                        db.commit(function (err) {
+                            if (err) {
+                                db.rollback();
+                                console.error("Commit error", err);
+                                res.status=false;
+                                return;
+                            }
+                            console.log("Supervisor assinged succesfully");                                                                                    
+                        });
+                    }
+                });
             }
         });
 });
@@ -80,12 +95,11 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    paygrade = await getData.getPayGradeById(req.body.paygrade);
-    if (paygrade.values.length < 1){
-        console.log("Invalid pay grade");
-        return res.status(400).json({
-            message: "Invalid pay grade"
-        });
+    const managerTypeId = emptype.values.filter((e)=>{e.type == 'Manager'}).id;
+    if ( managerTypeId == req.body.type){
+        req.body.paygrade = 3;
+    } else {
+        req.body.paygrade = 1;
     }
 
     empstatus = await getData.getEmpStatusById(req.body.empStatus);

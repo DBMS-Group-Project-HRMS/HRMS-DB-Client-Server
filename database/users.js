@@ -177,7 +177,7 @@ const registerUser = async (req)=>{
 
 const getUserByUsername = (username)=>{
     return new Promise((resolve, reject) => {
-        sql = "SELECT `user`.id, `user`.username, `user`.password, emptype.type FROM `user` JOIN employee JOIN emptype ON employee.type = emptype.id WHERE  username = ?;";
+        sql = "SELECT `user`.id, `user`.username, `user`.password, emptype.type, paygrade.paygrade FROM `user` JOIN employee JOIN emptype JOIN paygrade ON `user`.id = employee.user_id AND employee.paygrade = paygrade.id AND employee.type = emptype.id WHERE  username = ?;";
         res = {
             values: [],
             status: true,
@@ -555,11 +555,33 @@ const updateUser = (req)=>{
     return res;
 }
 
+const isSupervisor = (emp_id) => {
+    return new Promise((resolve, reject) => {
+        sql ="SELECT COUNT(*) FROM supervisor WHERE supervisor.sup_id = ?;";
+        res = {
+            value: false,
+            status: true,
+        };  
+        db.query(sql, [emp_id], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            if (results.values[0] > 0){
+                res.value = true
+            }
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     registerUser,
     getUserByUsername,
     getEmployee,
     getEmployeeList,
     getPhoneNoByEmpId,
-    updateUser
+    updateUser,
+    isSupervisor
 }

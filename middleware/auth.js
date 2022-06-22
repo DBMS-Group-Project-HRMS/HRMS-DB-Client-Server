@@ -23,4 +23,19 @@ const verifyToken = (req, res, next) => {
   return next();
 };
 
-module.exports = verifyToken;
+
+const hasPaygrade = (paygrades) => {
+  return (req, res, next) => {
+    const userGrade = req.user.paygrade;
+    if (paygrades.includes(userGrade)){
+      next();
+    } else {
+      return res.status(403).send("Incorrect user type. Not authorized.");
+    }
+  }
+}
+
+module.exports = {
+  verifyToken,
+  hasPaygrade
+}

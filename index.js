@@ -8,6 +8,7 @@ const managerRoutes = require('./routes/managerRoutes');
 const supervisorRoutes = require('./routes/supervisorRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const userRoutes = require('./routes/userRoutes');
+const {verifyToken, hasPaygrade}  = require("./middleware/auth");
 
 const app = express();
 
@@ -17,9 +18,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const port = process.env.PORT || 3001;
 
-app.use('/hr', hrRoutes);
-app.use('/manager', managerRoutes);
-app.use('/supervisor', supervisorRoutes);
+app.use('/hr', verifyToken, hasPaygrade(['level 4']), hrRoutes);
+app.use('/manager', verifyToken, hasPaygrade(['level 3', 'level 4']), managerRoutes);
+app.use('/supervisor', verifyToken, hasPaygrade(['level 2']), supervisorRoutes);
 app.use('/user', userRoutes);
 
 app.listen(port, () => {

@@ -74,12 +74,14 @@ const editUser = async (req,res)=>{
         });
     }
 
-    paygrade = await getData.getPayGradeById(req.body.paygrade_id);
-    if (paygrade.values.length < 1){
-        console.log("Invalid pay grade");
-        return res.status(400).json({
-            message: "Invalid pay grade"
-        });
+    const managerTypeId = emptype.values.filter((e)=>{e.type == 'Manager'}).id;
+    const supervisor = await users.isSupervisor(req.body.empId);
+    if ( managerTypeId == req.body.emptype_id){
+        req.body.paygrade = 3;
+    } else if (supervisor) {
+        req.body.paygrade = 2;
+    } else {
+        req.body.paygrade = 1;
     }
 
     empstatus = await getData.getEmpStatusById(req.body.empstatus_id);
