@@ -510,8 +510,8 @@ const updateUser = (req)=>{
         }); 
 
         const sqlupdate_phoneNumber = "UPDATE phonenumber SET phone_number = ? WHERE id = ?";
-        const phone_number1 = req.body.phone1_id;
-        const phone_number2 = req.body.phone2_id;
+        const phone_number1 = req.body.phone1;
+        const phone_number2 = req.body.phone2;
         const phone_number1_id = req.body.phone1_id;
         const phone_number2_id = req.body.phone2_id;
         db.query(sqlupdate_phoneNumber,

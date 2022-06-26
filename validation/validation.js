@@ -232,5 +232,5 @@ const employee_update = (req) => {
 
 module.exports = {
     employee_signup,
-    employee_update
+    employee_update,
 }

@@ -2,12 +2,18 @@ const db = require('../database/db_helper');
 const users = require('../database/users');
 const getData = require('../database/getData');
 const validator = require("../validation/validation");
+const setData = require("../database/setData");
 
-const showAll = (req,res)=>{
-    const sqlinsert = "SELECT * FROM department";
-    db.query(sqlinsert,(err,result) => {
-        res.send(result);
-    });
+const getPaygrades = async (req,res)=>{
+    const paygrades = await getData.getAllPaygrades();
+    if (paygrades.status){
+        return res.status(200).json(paygrades.values);
+    } else {
+        console.log("Cannot retrieve paygrade details");
+        return res.status(200).json({
+            message: "Cannot retrieve paygrade details"
+        })
+    }
 }
 
 const assignSupervisor = async (req,re)=>{
@@ -124,8 +130,27 @@ const registerEmployee = async (req,res)=>{
     }
 }
 
+const editPaygrade = async (req,res)=>{
+    console.log(req.body);
+    
+    const updateStatus = await setData.updatePaygrade(req.body);
+
+    if (updateStatus.status === true){
+        console.log("Successfully updated paygrade");
+        return res.status(201).json({
+            message: "Successfully updated paygrade"
+        });
+    }else{
+        console.log("Paygrade update failed");
+        return res.status(400).json({
+            message: "Paygrade update failed"
+        });
+    }
+}
+
 module.exports = {
-    showAll,
     registerEmployee,
-    assignSupervisor
+    assignSupervisor,
+    getPaygrades,
+    editPaygrade
 }

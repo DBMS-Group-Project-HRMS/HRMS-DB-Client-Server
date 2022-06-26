@@ -95,11 +95,31 @@ const getPayGradeById = (gradeId)=>{
     });
 }
 
+const getAllPaygrades = ()=>{
+    return new Promise((resolve, reject) => {
+        sql = "SELECT * FROM paygrade;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     getPayGradeById,
     getMaritalStatusById,
     getEmpTypeById,
     getEmpStatusById,
-    getDepartmentById
+    getDepartmentById,
+    getAllPaygrades
 }
 
