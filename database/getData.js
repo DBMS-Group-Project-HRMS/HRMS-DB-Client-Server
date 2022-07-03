@@ -135,6 +135,7 @@ const getJobTitles = ()=>{
 
 const getEmployeeId = (user_id) => {
     return new Promise((resolve, reject) => {
+        console.log("User_id........................", user_id)
         sql = "SELECT ID FROM employee WHERE user_id = ?;";
         res = {
             values: [],
@@ -159,6 +160,7 @@ module.exports = {
     getEmpStatusById,
     getDepartmentById,
     getAllPaygrades,
-    getJobTitles
+    getJobTitles,
+    getEmployeeId
 }
 

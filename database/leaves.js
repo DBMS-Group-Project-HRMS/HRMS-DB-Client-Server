@@ -87,6 +87,8 @@ const getLeaveStatus = (leave_id)=>{
 }
 
 const submitLeave = (req, emp_id)=>{
+
+    console.log(req.body)
     return new Promise((resolve, reject) => {
         sql = "SELECT id FROM leavetype WHERE type = ?";
         res = {
@@ -99,9 +101,9 @@ const submitLeave = (req, emp_id)=>{
                 res.status = false;
                 resolve(res);
             } else {
-                type_id = result[0].id;
-                sql = "INSERT INTO `leave` (emp_id, type_id, date, reason) VALUES (?, ?, ?, ?)";
-                db.query(sql, [emp_id, type_id, req.body.date, req.body.reason], function (error, results) {
+                type_id = results[0].id;
+                sql = "INSERT INTO `leave` (emp_id, type_id, type, date, reason) VALUES (?, ?, ?, ?, ?)";
+                db.query(sql, [emp_id, type_id, req.body.type, req.body.leave_date, req.body.reason], function (error, results) {
                     if (error) {
                         console.log(error);
                         res.status = false;
