@@ -19,6 +19,26 @@ const updatePaygrade = (data)=>{
     });
 }
 
+const addJobTitle = (data)=>{
+    return new Promise((resolve, reject) => {
+        sql = "INSERT INTO emptype (type) VALUE (?);";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [data.title], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
-    updatePaygrade
+    updatePaygrade,
+    addJobTitle
 }

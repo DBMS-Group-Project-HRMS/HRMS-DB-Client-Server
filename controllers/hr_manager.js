@@ -130,6 +130,31 @@ const registerEmployee = async (req,res)=>{
     }
 }
 
+const addJobTitle = async (req,res)=>{
+    console.log(req.body);
+    const validation_result = validator.add_job_title(req);
+
+    if (validation_result.status) {
+        console.log("Validation error", validation_result.message)
+        return res.status(400).json({
+          message: validation_result.message,
+        });
+    }
+
+    const addTitleStatus = await setData.addJobTitle(req.body);
+    if (addTitleStatus.status === true){
+        console.log("Successfully added new Job Title");
+        return res.status(201).json({
+            message: "Successfully added new Job Title"
+        });
+    }else{
+        console.log("Addition failed");
+        return res.status(400).json({
+            message: "Addition failed"
+        });
+    }
+}
+
 const editPaygrade = async (req,res)=>{
     console.log(req.body);
     
@@ -148,9 +173,24 @@ const editPaygrade = async (req,res)=>{
     }
 }
 
+const getJobTitles = async (req, res)=>{
+    const jobTitles = await getData.getJobTitles();
+    if (jobTitles.status){
+        return res.status(200).json(jobTitles.values);
+    } else {
+        console.log("Cannot retrieve job title details");
+        return res.status(200).json({
+            message: "Cannot retrieve job title details"
+        })
+    }
+}
+
+
 module.exports = {
     registerEmployee,
     assignSupervisor,
     getPaygrades,
-    editPaygrade
+    editPaygrade,
+    getJobTitles,
+    addJobTitle
 }

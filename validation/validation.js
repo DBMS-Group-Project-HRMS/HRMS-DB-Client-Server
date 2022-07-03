@@ -230,7 +230,33 @@ const employee_update = (req) => {
   }
 };
 
+const add_job_title = (req) => {
+  result = {
+    message: "",
+    status: false,
+  };
+
+  try {
+    const title = req.body.title;
+    if (
+      validator.isEmpty(title)
+    ) {
+      result.message = "Input can't be empty";
+      result.status = true;
+      return result;
+    }
+  } catch (error) {
+    console.log(error.message, error.stack);
+    result.message = "Input validation failed";
+    result.status = true;
+    return result;
+  } finally {
+    return result;
+  }
+};
+
 module.exports = {
     employee_signup,
     employee_update,
+    add_job_title
 }
