@@ -1,24 +1,28 @@
 const leaves = require('../database/leaves');
+const getdata = require('../database/getData');
 
 const getLeaveRequests = async (req,res)=>{
-    //sup_id = ?;
 
-    const paygrades = await getData.getEmployeeId(req.body.user_id);
+    sup_id = await getdata.getEmployeeId(req.user.userId);
+    console.log(sup_id)
+
+    // const paygrades = await getData.getEmployeeId(req.body.user_id);
      
-    //leaveRequests = await leaves.getLeavesBySupId(sup_id);
+    leaveRequests = await leaves.getLeavesBySupId(sup_id.values[0].ID);
+    
 
-    // console.log(leaveRequests);
+    console.log(leaveRequests);
 
-    // if (res.status){
-    //     return res.status(201).json({
-    //         message: "User " + req.params.user_id + " found",
-    //         data: leaveRequests.values
-    //     });
-    // } else {
-    //     return res.status(400).json({
-    //         message: "Cannot get leave requests"
-    //     });
-    // }
+    if (res.status){
+        return res.status(201).json({
+            message: "User " + req.params.user_id + " found",
+            data: leaveRequests.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot get leave requests"
+        });
+    }
 }
 
 const reviewLeaveRequest = async (req,res)=>{

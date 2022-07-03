@@ -3,8 +3,6 @@ const getdata = require('../database/getData');
 
 const applyLeave = async (req,res)=>{
 
-    console.log(req.user)
-
     emp_id = await getdata.getEmployeeId(req.user.userId);
     console.log(emp_id)
     submissionStatus = await leaves.submitLeave(req, emp_id.values[0].ID);
