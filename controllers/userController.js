@@ -11,6 +11,9 @@ exports.user_login = async (req, res) => {
     //   });
     // }
     let user = await users.getUserByUsername(req.body.username);
+    
+    console.log(req.body)
+    console.log(user)
   
     if (!user.status) {
       return res.status(502).json({

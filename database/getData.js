@@ -114,6 +114,25 @@ const getAllPaygrades = ()=>{
     });
 }
 
+const getEmployeeId = (user_id) => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT ID FROM employee WHERE user_id = ?;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [user_id], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     getPayGradeById,
     getMaritalStatusById,

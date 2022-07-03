@@ -2,6 +2,8 @@ const leaves = require('../database/leaves');
 
 const getLeaveRequests = async (req,res)=>{
     //sup_id = ?;
+
+    const paygrades = await getData.getEmployeeId(req.body.user_id);
      
     //leaveRequests = await leaves.getLeavesBySupId(sup_id);
 
