@@ -6,7 +6,6 @@ const db = require('./database/db_helper');
 const hrRoutes = require('./routes/hrRoutes');
 const managerRoutes = require('./routes/managerRoutes');
 const supervisorRoutes = require('./routes/supervisorRoutes');
-const employeeRoutes = require('./routes/employeeRoutes');
 const userRoutes = require('./routes/userRoutes');
 const {verifyToken, hasPaygrade}  = require("./middleware/auth");
 
@@ -24,8 +23,21 @@ app.use('/supervisor', verifyToken, hasPaygrade(['level 2']), supervisorRoutes);
 app.use('/user', userRoutes);
 
 app.listen(port, () => {
-console.log("Database Connected...")
 console.log(`Listening on port ${port}`)
+});
+
+app.get("/getleavetypes",(req,res)=>{
+    var selectDetails=[];
+    const sqlinsert = "SELECT type FROM leavetype";
+    db.query(sqlinsert,(err,result) => {
+        if(err){
+            console.log("table error", err);
+        }else{
+            selectDetails.push(result);
+            console.log("all data here",selectDetails)
+            res.send(selectDetails);
+        }
+    })
 });
 
 app.get("/getHRMSdetails",(req,res)=>{
