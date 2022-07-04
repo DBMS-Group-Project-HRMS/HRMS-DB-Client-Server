@@ -76,9 +76,29 @@ const getUserDataByDepartment = (department) => {
     });
 }
 
+const getLeavesByDepartment = (from, to) => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT department, COUNT(id) as total_leaves FROM `leaves_by_department` WHERE ? <= leaves_by_department.Date AND leaves_by_department.Date <= ? GROUP BY department;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [from, to], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     getDepartmentList,
     getParameterList,
     getCurrentUserName,
-    getUserDataByDepartment
+    getUserDataByDepartment,
+    getLeavesByDepartment
 }

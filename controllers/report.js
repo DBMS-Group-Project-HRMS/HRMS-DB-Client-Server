@@ -84,9 +84,40 @@ const createEmployeeByDepartmentReport = async (req, res) => {
     
 }
 
+const createLeavesByDepartmentReport = async (req, res) => {
+    const from = req.body.from;
+    const to = req.body.to;
+
+    departmentList = await reportData.getDepartmentList();
+    leavesByDepartmentRaw = await reportData.getLeavesByDepartment(from, to);
+
+    leavesByDepartmentJSON = JSON.parse(JSON.stringify(leavesByDepartmentRaw.values));
+
+    let leavesbyAllDepartmentsJSON = [];
+
+    for (var i = 0; i < departmentList.values.length; i++) {
+        let department = departmentList.values[i].Name;
+        let numLeaves = 0;
+        for (var j = 0; j < leavesByDepartmentJSON.length; j++) {
+            if (leavesByDepartmentJSON[j].department == department) {
+                numLeaves = leavesByDepartmentJSON[j].total_leaves;
+            }  
+        }
+        let leaveDepartmentPair = {"department":department, "total_leaves":numLeaves};
+        leavesbyAllDepartmentsJSON[i] = leaveDepartmentPair;
+    }
+
+    return res.status(201).json({
+        message: "Leaves taken in given period",
+        data: leavesbyAllDepartmentsJSON
+    });
+
+}
+
 module.exports = {
     getDepartmentList,
     getEmployeeByDepartmentReportParameters,
     getCurrentUserName,
-    createEmployeeByDepartmentReport
+    createEmployeeByDepartmentReport,
+    createLeavesByDepartmentReport
 }
