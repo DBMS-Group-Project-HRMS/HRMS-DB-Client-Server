@@ -22,14 +22,8 @@ const employee_signup = (req) => {
     const lastname = req.body.lastname;
     const birthday = req.body.birthday;
     const email = req.body.email;
-    const salary = req.body.salary;
     const joined_date = req.body.Joined_date;
     const nic_number = req.body.nic_number;
-    const department = req.body.department;
-    const maritalStatus = req.body.maritalStatus;
-    const emp_type = req.body.type;
-    const paygrade = req.body.paygrade;
-    const empStatus = req.body.empStatus;
     const phone_number1 = req.body.phonenumber1;
     const phone_number2 = req.body.phonenumber2;
 
