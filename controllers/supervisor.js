@@ -62,14 +62,10 @@ const reviewLeaveRequest = async (req,res)=>{
 
 
 const getLeaveData = async (req,res)=>{
-
-    emp_id = req.user.emp_ID;
-    console.log(emp_id)
-
-    // const paygrades = await getData.getEmployeeId(req.body.user_id);
+    emp_id = req.params.emp_ID;
+    console.log("employee id", emp_id)
      
-    leaveData = await leaves.getLeavesData(emp_id.values[0].ID);
-    
+    leaveData = await leaves.getLeavesData(emp_id);
     console.log(leaveData);
 
     if (res.status){
