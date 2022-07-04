@@ -119,7 +119,7 @@ const submitLeave = (req, emp_id)=>{
 
 const getLeavesData = (emp_ID)=>{
     return new Promise((resolve, reject) => {
-        sql = "SELECT `employee`.firstname, `employee`.lastname, `leavestatus`.status, `leave`.type, `leave`.Date, `leave`.reason FROM `employee`, `leavestatus`, `leave` WHERE `leave`.status = `leavestatus`.`ID` AND `employee`.id = `leave`.`emp_ID` AND `employee`.ID = ? ;";
+        sql = "SELECT `employee`.firstname, `employee`.lastname, `leavestatus`.status, `leave`.id,`leave`.type, `leave`.Date, `leave`.reason FROM `employee`, `leavestatus`, `leave` WHERE `leave`.status = `leavestatus`.`ID` AND `employee`.id = `leave`.`emp_ID` AND `employee`.ID = ? ;";
         res = {
             values: [],
             status: true,
@@ -131,11 +131,49 @@ const getLeavesData = (emp_ID)=>{
                 resolve(res);
             }
             res.values = results;
-            console.log(results)
             resolve(res);
         });
     });
 }
+
+
+const setAcceptLeave = (leave_id)=>{
+    return new Promise((resolve, reject) => {
+        sql = "UPDATE `leave` SET status = 2 WHERE `leave`.id= ? ;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [leave_id], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            resolve(res);
+        });
+    });
+}
+
+
+const setRejectLeave = (leave_id)=>{
+    return new Promise((resolve, reject) => {
+        sql = "UPDATE `leave` SET status = 3 WHERE `leave`.id= ? ;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [leave_id], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            resolve(res);
+        });
+    });
+}
+
 
 module.exports = {
     reviewRequest,
@@ -143,5 +181,7 @@ module.exports = {
     getSupervisor,
     getLeaveStatus,
     submitLeave,
-    getLeavesData
+    getLeavesData,
+    setAcceptLeave,
+    setRejectLeave
 }

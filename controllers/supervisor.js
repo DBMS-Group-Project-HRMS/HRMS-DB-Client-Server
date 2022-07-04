@@ -75,13 +75,49 @@ const getLeaveData = async (req,res)=>{
         });
     } else {
         return res.status(400).json({
+            
             message: "Cannot get leave requests"
         });
     }
 }
 
+const acceptLeave = async (req,res)=>{
+    leave_id = req.params.id;
+     
+    accepted = await leaves.setAcceptLeave(leave_id);
+
+    if (res.status){
+        return res.status(201).json({
+            message: "Leave ID " + leave_id + " accepted",
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot Update status in leave table"
+        });
+    }
+}
+
+const rejectLeave = async (req,res)=>{
+    leave_id = req.params.id;
+     
+    rejected = await leaves.setRejectLeave(leave_id);
+
+    if (res.status){
+        return res.status(201).json({
+            message: "Leave ID " + leave_id + " accepted",
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot Update status in leave table"
+        });
+    }
+}
+
+
 module.exports = {
     getLeaveRequests,
     reviewLeaveRequest,
-    getLeaveData
+    getLeaveData,
+    acceptLeave,
+    rejectLeave
 }
