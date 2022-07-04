@@ -40,6 +40,7 @@ app.get("/getleavetypes",(req,res)=>{
     })
 });
 
+
 app.get("/getHRMSdetails",(req,res)=>{
     var selectDetails=[];
     const sqlinsert = "SELECT ID as id,Name as name FROM department where ID>1";
