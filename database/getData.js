@@ -152,6 +152,25 @@ const getEmployeeId = (user_id) => {
     });
 }
 
+const getUserIdByEmpId = (emp_ID) => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT user_Id FROM employee WHERE ID = ?;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [emp_ID], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 
 
 module.exports = {
@@ -163,5 +182,6 @@ module.exports = {
     getAllPaygrades,
     getEmployeeId,
     getJobTitles,
+    getUserIdByEmpId
 }
 

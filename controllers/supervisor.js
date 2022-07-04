@@ -61,7 +61,31 @@ const reviewLeaveRequest = async (req,res)=>{
 }
 
 
+const getLeaveData = async (req,res)=>{
+
+    emp_id = req.user.emp_ID;
+    console.log(emp_id)
+
+    // const paygrades = await getData.getEmployeeId(req.body.user_id);
+     
+    leaveData = await leaves.getLeavesData(emp_id.values[0].ID);
+    
+    console.log(leaveData);
+
+    if (res.status){
+        return res.status(201).json({
+            message: "User " + req.params.user_id + " found",
+            data: leaveData.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot get leave requests"
+        });
+    }
+}
+
 module.exports = {
     getLeaveRequests,
-    reviewLeaveRequest
+    reviewLeaveRequest,
+    getLeaveData
 }

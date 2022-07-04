@@ -117,10 +117,30 @@ const submitLeave = (req, emp_id)=>{
     });
 }
 
+const getLeavesData = (emp_ID)=>{
+    return new Promise((resolve, reject) => {
+        sql = "SELECT employee.firstname, employee.lastname, leavestatus.status, leave.type, leave.Date, leave.reason FROM employee join leavestatus join leave ON leave.status = leavestatus.id WHERE employee.id = ? ;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [emp_ID], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     reviewRequest,
     getLeavesBySupId,
     getSupervisor,
     getLeaveStatus,
-    submitLeave
+    submitLeave,
+    getLeavesData
 }
