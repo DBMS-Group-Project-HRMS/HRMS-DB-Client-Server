@@ -88,7 +88,7 @@ const acceptLeave = async (req,res)=>{
 
     if (res.status){
         return res.status(201).json({
-            message: "Leave ID " + leave_id + " accepted",
+            message: "Approved",
         });
     } else {
         return res.status(400).json({
@@ -104,7 +104,7 @@ const rejectLeave = async (req,res)=>{
 
     if (res.status){
         return res.status(201).json({
-            message: "Leave ID " + leave_id + " accepted",
+            message: "Rejected",
         });
     } else {
         return res.status(400).json({
