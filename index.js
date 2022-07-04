@@ -28,7 +28,7 @@ console.log(`Listening on port ${port}`)
 
 app.get("/getleavetypes",(req,res)=>{
     var selectDetails=[];
-    const sqlinsert = "SELECT ID,type FROM leavetype";
+    const sqlinsert = "SELECT ID, type FROM leavetype";
     db.query(sqlinsert,(err,result) => {
         if(err){
             console.log("table error", err);
