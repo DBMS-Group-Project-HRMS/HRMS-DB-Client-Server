@@ -95,25 +95,17 @@ const submitLeave = (req, emp_id)=>{
             values: [],
             status: true,
         };  
-        db.query(sql, ["TBD"], function (error, results) {
+
+        sql = "INSERT INTO `leave` (emp_id, type_id, date, reason) VALUES (?, ?, ?, ?)";
+        db.query(sql, [emp_id, req.body.type, req.body.leave_date, req.body.reason], function (error, results) {
             if (error) {
                 console.log(error);
                 res.status = false;
                 resolve(res);
-            } else {
-                type_id = results[0].id;
-                sql = "INSERT INTO `leave` (emp_id, type_id, date, reason) VALUES (?, ?, ?, ?)";
-                db.query(sql, [emp_id, type_id, req.body.leave_date, req.body.reason], function (error, results) {
-                    if (error) {
-                        console.log(error);
-                        res.status = false;
-                        resolve(res);
-                    }
-                    res.values = results;
-                    resolve(res);
-            });
-            } 
-        });  
+            }
+            res.values = results;
+            resolve(res);
+            });  
     });
 }
 
