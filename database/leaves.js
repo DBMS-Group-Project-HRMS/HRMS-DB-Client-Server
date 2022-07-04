@@ -119,7 +119,7 @@ const submitLeave = (req, emp_id)=>{
 
 const getLeavesData = (leave_id)=>{
     return new Promise((resolve, reject) => {
-        sql = "SELECT `employee`.firstname, `employee`.lastname, `leavestatus`.status, `leave`.id, leavetype.type, `leave`.Date, `leave`.reason FROM `employee` JOIN `leavestatus` JOIN `leave` ON `leave`.status = `leavestatus`.`ID` AND `employee`.id = `leave`.`emp_ID` AND `leave`.type_ID = leavetype.ID WHERE `leave`.id = ? ;";
+        sql = "SELECT `employee`.firstname, `employee`.lastname, `leavestatus`.status, `leave`.id, leavetype.type, `leave`.Date, `leave`.reason FROM `employee` JOIN `leavestatus` JOIN `leave` JOIN leavetype ON `leave`.status = `leavestatus`.`ID` AND `employee`.id = `leave`.`emp_ID` AND `leave`.type_ID = leavetype.ID WHERE `leave`.id = ?;";
         res = {
             values: [],
             status: true,
