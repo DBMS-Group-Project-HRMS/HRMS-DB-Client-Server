@@ -95,10 +95,30 @@ const getLeavesByDepartment = (from, to) => {
     });
 }
 
+const getAverageSalaryByDepartment = () => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT * FROM `average_salary_by_department`;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     getDepartmentList,
     getParameterList,
     getCurrentUserName,
     getUserDataByDepartment,
-    getLeavesByDepartment
+    getLeavesByDepartment,
+    getAverageSalaryByDepartment
 }

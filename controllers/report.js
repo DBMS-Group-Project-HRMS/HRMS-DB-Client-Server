@@ -114,10 +114,26 @@ const createLeavesByDepartmentReport = async (req, res) => {
 
 }
 
+const createAverageSalaryByDepartmentsReport = async (req, res) => {
+    averageSalariesByDepartment = await reportData.getAverageSalaryByDepartment();
+
+    if (averageSalariesByDepartment.values.length >= 1){
+        return res.status(201).json({
+            message: "Average salary by department view found",
+            data: averageSalariesByDepartment.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot find Average salary by department view"
+        });
+    }
+}
+
 module.exports = {
     getDepartmentList,
     getEmployeeByDepartmentReportParameters,
     getCurrentUserName,
     createEmployeeByDepartmentReport,
-    createLeavesByDepartmentReport
+    createLeavesByDepartmentReport,
+    createAverageSalaryByDepartmentsReport
 }
