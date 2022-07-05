@@ -9,5 +9,7 @@ router.get('/get_employee_by_department_report_parameters', report.getEmployeeBy
 router.post('/create_employee_by_department_report', report.createEmployeeByDepartmentReport);
 router.post('/create_leaves_by_department_report', report.createLeavesByDepartmentReport);
 router.get('/create_average_salary_of_departments_report', report.createAverageSalaryByDepartmentsReport);
+router.get('/get_employee_and_supervisor_report_parameters', report.getEmployeeAndSupervisorReportParameters);
+router.post('/create_employee_and_supervisor_report', report.createEmployeeAndSupervisorReport);
 
 module.exports = router;

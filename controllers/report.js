@@ -129,11 +129,66 @@ const createAverageSalaryByDepartmentsReport = async (req, res) => {
     }
 }
 
+const getEmployeeAndSupervisorReportParameters = async (req, res) => {
+    parameterList = await reportData.getEmployeeAndSupervisorParameterList();
+
+    if (parameterList.values.length >= 1){
+        return res.status(201).json({
+            message: "Parameters found",
+            data: parameterList.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot find Parameters"
+        });
+    }
+}
+
+const createEmployeeAndSupervisorReport = async (req, res) => {
+    const checkedParameterList = req.body.parameters;
+    const validParameterList = [];
+
+    allUserData = await reportData.getEmployeesAndSupervisors();
+    allParameterList = await reportData.getEmployeeAndSupervisorParameterList();
+
+    allParametersJSON = JSON.parse(JSON.stringify(allParameterList.values));
+    allUserDataJSON = JSON.parse(JSON.stringify(allUserData.values));
+
+    for (var i = 0; i < allParametersJSON.length; i++) {
+        if ( checkedParameterList[i] )
+            validParameterList.push(allParametersJSON[i].COLUMN_NAME);
+    }
+
+    for (var i = 0; i < allUserDataJSON.length; i++) {
+        var j = 0;
+        Object.keys(allUserDataJSON[i]).forEach(function(key) {
+            if ( !checkedParameterList[j] )
+                delete(allUserDataJSON[i][key]);
+            j++;
+        });
+    }
+
+    if (allUserDataJSON.length >= 1){
+        return res.status(201).json({
+            message: "Employees and supervisors found",
+            data: [validParameterList, allUserDataJSON]
+        });
+    } else {
+        return res.status(201).json({
+            message: "No supervisors assigned to employees",
+            data: []
+        });
+    }
+    
+}
+
 module.exports = {
     getDepartmentList,
     getEmployeeByDepartmentReportParameters,
     getCurrentUserName,
     createEmployeeByDepartmentReport,
     createLeavesByDepartmentReport,
-    createAverageSalaryByDepartmentsReport
+    createAverageSalaryByDepartmentsReport,
+    getEmployeeAndSupervisorReportParameters,
+    createEmployeeAndSupervisorReport
 }
