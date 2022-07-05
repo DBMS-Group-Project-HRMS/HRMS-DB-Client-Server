@@ -166,6 +166,24 @@ const setRejectLeave = (leave_id)=>{
     });
 }
 
+const getLeavesByEmpId = (empId)=>{
+    return new Promise((resolve, reject) => {
+        sql = "SELECT `employee`.firstname, `employee`.lastname, `leavestatus`.status, `leave`.id, leavetype.type, `leave`.Date, `leave`.reason FROM `employee` JOIN `leavestatus` JOIN `leave` JOIN leavetype ON `leave`.status = `leavestatus`.`ID` AND `employee`.id = `leave`.`emp_ID` AND `leave`.type_ID = leavetype.ID WHERE `leave`.emp_ID = ?;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [empId], function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
 
 module.exports = {
     reviewRequest,
@@ -175,5 +193,6 @@ module.exports = {
     submitLeave,
     getLeavesData,
     setAcceptLeave,
-    setRejectLeave
+    setRejectLeave,
+    getLeavesByEmpId
 }

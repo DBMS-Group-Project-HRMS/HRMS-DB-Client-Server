@@ -113,11 +113,10 @@ const rejectLeave = async (req,res)=>{
     }
 }
 
-
 module.exports = {
     getLeaveRequests,
     reviewLeaveRequest,
     getLeaveData,
     acceptLeave,
-    rejectLeave
+    rejectLeave,
 }

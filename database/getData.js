@@ -116,7 +116,7 @@ const getAllPaygrades = ()=>{
 
 const getJobTitles = ()=>{
     return new Promise((resolve, reject) => {
-        sql = "SELECT * FROM empType;";
+        sql = "SELECT * FROM emptype;";
         res = {
             values: [],
             status: true,

@@ -1,10 +1,10 @@
 const express = require('express');
 const manager = require('../controllers/manager');
-
+const {verifyToken, hasPaygrade}  = require("../middleware/auth");
 const router = express.Router();
 
-router.get('/view_user/:user_id', manager.viewUser);
-router.get('/get_users_list', manager.getUserList);
-router.post('/edit_user/:user_id', manager.editUser);
+router.get('/view_user/:user_id', hasPaygrade(['level 1', 'level 3', 'level 4']), manager.viewUser);
+router.get('/get_users_list', hasPaygrade(['level 3', 'level 4']), manager.getUserList);
+router.post('/edit_user/:user_id', hasPaygrade(['level 3', 'level 4']), manager.editUser);
 
 module.exports = router;

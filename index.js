@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3001;
 
 app.use('/hr', verifyToken, hasPaygrade(['level 4']), hrRoutes);
-app.use('/manager', verifyToken, hasPaygrade(['level 3', 'level 4']), managerRoutes);
+app.use('/manager', verifyToken, managerRoutes);
 app.use('/supervisor', verifyToken, hasPaygrade(['level 2']), supervisorRoutes);
 app.use('/user', userRoutes);
 

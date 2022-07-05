@@ -30,6 +30,25 @@ const applyLeave = async (req,res)=>{
     }
 }
 
+const getLeaves = async (req,res)=>{
+
+    emp_id = await getdata.getEmployeeId(req.user.userId);
+
+    leaveRequests = await leaves.getLeavesByEmpId(emp_id.values[0].ID);
+
+    if (res.status){
+        return res.status(201).json({
+            message: "User " + req.params.user_id + " found",
+            data: leaveRequests.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot get leave requests"
+        });
+    }
+}
+
 module.exports = {
-    applyLeave
+    applyLeave,
+    getLeaves
 }
