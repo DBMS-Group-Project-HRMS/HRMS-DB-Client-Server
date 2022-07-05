@@ -19,6 +19,23 @@ const viewUser = async (req,res)=>{
     }
 }
 
+
+const get_supervisor_list = async (req,res)=>{
+    user = await users.getSupervisorList();
+
+    if (user.status){
+        console.log("Users found");
+        return res.status(201).json({
+            message: "Users found",
+            data: user.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot find users"
+        });
+    }
+}
+
 const getUserList = async (req,res)=>{
     user = await users.getEmployeeList();
 
@@ -109,5 +126,6 @@ const editUser = async (req,res)=>{
 module.exports = {
     viewUser,
     getUserList,
-    editUser
+    editUser,
+    get_supervisor_list
 }

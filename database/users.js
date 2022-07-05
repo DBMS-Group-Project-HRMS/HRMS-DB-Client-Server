@@ -194,6 +194,25 @@ const getUserByUsername = (username)=>{
     });
 }
 
+const getSupervisorList = (username)=>{
+    return new Promise((resolve, reject) => {
+        sql = "SELECT * FROM `supervisor`;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [username], function (error, results) {
+            if (error) {
+            console.log(error);
+            res.status = false;
+            resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 const getEmployee = (user_id)=>{
     return new Promise((resolve, reject) => {
         sql = `SELECT 
@@ -583,5 +602,6 @@ module.exports = {
     getEmployeeList,
     getPhoneNoByEmpId,
     updateUser,
-    isSupervisor
+    isSupervisor,
+    getSupervisorList
 }
