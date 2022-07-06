@@ -108,7 +108,6 @@ const employee_signup = (req) => {
     }
 
   } catch (error) {
-    console.log(error.message, error.stack);
     result.message = "Input validation failed";
     result.status = true;
     return result;
@@ -215,7 +214,6 @@ const employee_update = (req) => {
    
 
   } catch (error) {
-    console.log(error.message, error.stack);
     result.message = "Input validation failed";
     result.status = true;
     return result;
@@ -240,7 +238,6 @@ const add_job_title = (req) => {
       return result;
     }
   } catch (error) {
-    console.log(error.message, error.stack);
     result.message = "Input validation failed";
     result.status = true;
     return result;

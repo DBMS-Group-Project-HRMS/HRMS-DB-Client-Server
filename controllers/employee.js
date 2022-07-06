@@ -9,7 +9,6 @@ const applyLeave = async (req,res)=>{
     const available_count = count_res.values[0]["available_leaves(" + emp_id.values[0].ID + ")"];
 
     if (available_count <= 0){
-        console.log("Maximum possible leave count exceeded");
         return res.status(400).json({
             message: "Maximum possible leave count exceeded"
         });
@@ -18,7 +17,6 @@ const applyLeave = async (req,res)=>{
     submissionStatus = await leaves.submitLeave(req, emp_id.values[0].ID);
 
     if (submissionStatus.status === true){
-        console.log("Successfully submitted leave");
         return res.status(201).json({
             message: "Successfully submitted leave"
         });

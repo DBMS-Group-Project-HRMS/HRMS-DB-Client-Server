@@ -25,7 +25,6 @@ const reviewLeaveRequest = async (req,res)=>{
     //is correct supervisor
     const reviewer = await leaves.getSupervisor(leave_id);
     if (reviewer.values[0].id == sup_id){
-        console.log("Not the correct supervisor");
         return res.status(400).json({
             message: "Not the correct supervisor"
         });
@@ -33,7 +32,6 @@ const reviewLeaveRequest = async (req,res)=>{
     //is leave status TBD
     const leaveStatus = await leaves.getLeaveStatus(leave_id);
     if (leaveStatus.values[0].status == "TBD"){
-        console.log("This request has been already reviewed");
         return res.status(400).json({
             message: "This request has been already reviewed"
         });
@@ -41,12 +39,10 @@ const reviewLeaveRequest = async (req,res)=>{
 
     const reviewStatus = await leaves.reviewRequest(leave_id, status);
     if (regitrationStatus.status === true){
-        console.log("Successfully reviewed request");
         return res.status(200).json({
             message: "Successfully reviewed request"
         });
     }else{
-        console.log("Request review failed");
         return res.status(400).json({
             message: "Request review failed"
         });
