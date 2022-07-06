@@ -59,7 +59,7 @@ const getCurrentUserName = (id) => {
 
 const getUserDataByDepartment = (department) => {
     return new Promise((resolve, reject) => {
-        sql = "SELECT user_id, firstname, lastname, email, joined_date, emp_type, emp_status, paygrade FROM employee_by_department WHERE department = ?;";
+        sql = "SELECT ID, `Employee Name`, Email, `Joined Date`, `Employee Type`, `Employee Status`, Paygrade FROM employee_by_department WHERE Department = ?;";
         res = {
             values: [],
             status: true,
@@ -152,6 +152,45 @@ const getEmployeesAndSupervisors = () => {
     });
 }
 
+const getGroupEmployeesReportParameters = () => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name = 'employee_grouping' AND COLUMN_NAME != 'user_Id';";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, function (error, results) {
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
+const getEmployeeCountByGrouping = (parameter) => {
+    return new Promise((resolve, reject) => {
+        sql = "SELECT ?, COUNT(user_Id) as `Employee Count` FROM `employee_grouping` GROUP BY ?;";
+        res = {
+            values: [],
+            status: true,
+        };  
+        db.query(sql, [parameter, parameter], function (error, results) {
+            console.log(results);
+            if (error) {
+                console.log(error);
+                res.status = false;
+                resolve(res);
+            }
+            res.values = results;
+            resolve(res);
+        });
+    });
+}
+
 module.exports = {
     getDepartmentList,
     getParameterList,
@@ -160,5 +199,7 @@ module.exports = {
     getLeavesByDepartment,
     getAverageSalaryByDepartment,
     getEmployeeAndSupervisorParameterList,
-    getEmployeesAndSupervisors
+    getEmployeesAndSupervisors,
+    getGroupEmployeesReportParameters,
+    getEmployeeCountByGrouping
 }

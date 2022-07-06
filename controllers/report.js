@@ -182,6 +182,39 @@ const createEmployeeAndSupervisorReport = async (req, res) => {
     
 }
 
+const getGroupEmployeesReportParameters = async (req, res) => {
+    parameterList = await reportData.getGroupEmployeesReportParameters();
+
+    if (parameterList.values.length >= 1){
+        return res.status(201).json({
+            message: "Parameters found",
+            data: parameterList.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot find Parameters"
+        });
+    }
+}
+
+const createGroupedEmployeeReport = async (req, res) => {
+    const checkedParameter = req.body.parameter;
+
+    countEmployeesByGrouping = await reportData.getEmployeeCountByGrouping(checkedParameter);
+
+    if (countEmployeesByGrouping.values.length >= 1){
+        return res.status(201).json({
+            message: "Average salary by department view found",
+            data: countEmployeesByGrouping.values
+        });
+    } else {
+        return res.status(400).json({
+            message: "Cannot find Average salary by department view"
+        });
+    }
+    
+}
+
 module.exports = {
     getDepartmentList,
     getEmployeeByDepartmentReportParameters,
@@ -190,5 +223,7 @@ module.exports = {
     createLeavesByDepartmentReport,
     createAverageSalaryByDepartmentsReport,
     getEmployeeAndSupervisorReportParameters,
-    createEmployeeAndSupervisorReport
+    createEmployeeAndSupervisorReport,
+    getGroupEmployeesReportParameters,
+    createGroupedEmployeeReport
 }
