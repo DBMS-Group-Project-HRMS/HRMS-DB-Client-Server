@@ -101,8 +101,7 @@ const registerEmployee = async (req,res)=>{
         });
     }
 
-    const managerType = emptype.values.filter((e)=>{e.type == 'Manager'});
-    if ( managerType.length > 0){
+    if (emptype.values[0].type == "Manager"){
         req.body.paygrade = 3;
     } else {
         req.body.paygrade = 1;

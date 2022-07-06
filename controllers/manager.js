@@ -91,9 +91,8 @@ const editUser = async (req,res)=>{
         });
     }
 
-    const managerTypeId = emptype.values.filter((e)=>{e.type == 'Manager'}).id;
     const supervisor = await users.isSupervisor(req.body.empId);
-    if ( managerTypeId == req.body.emptype_id){
+    if (emptype.values[0].type == "Manager"){
         req.body.paygrade = 3;
     } else if (supervisor) {
         req.body.paygrade = 2;

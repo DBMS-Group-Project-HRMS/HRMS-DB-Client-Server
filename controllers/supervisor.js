@@ -66,7 +66,6 @@ const getLeaveData = async (req,res)=>{
     console.log("employee id", emp_id)
      
     leaveData = await leaves.getLeavesData(emp_id);
-    console.log(leaveData);
 
     if (res.status){
         return res.status(201).json({
