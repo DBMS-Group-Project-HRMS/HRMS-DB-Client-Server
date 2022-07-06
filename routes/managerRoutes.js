@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/view_user/:user_id', hasPaygrade(['level 1', 'level 3', 'level 4']), manager.viewUser);
 router.get('/get_users_list', hasPaygrade(['level 3', 'level 4']), manager.getUserList);
+router.get('/get_supervisor_list', manager.get_supervisor_list);
 router.post('/edit_user/:user_id', hasPaygrade(['level 3', 'level 4']), manager.editUser);
 
 module.exports = router;
