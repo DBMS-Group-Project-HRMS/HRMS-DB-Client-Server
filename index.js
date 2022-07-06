@@ -75,7 +75,6 @@ app.get("/getHRMSdetails",(req,res)=>{
                                             console.log("table error", err);
                                         }else{
                                             selectDetails.push(result);
-                                            console.log("all data here",selectDetails)
                                             res.send(selectDetails);
                                         }
                                     });

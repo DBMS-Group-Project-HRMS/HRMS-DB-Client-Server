@@ -5,7 +5,6 @@ const validator = require("../validation/validation");
 const viewUser = async (req,res)=>{
     user = await users.getEmployee(req.params.user_id);
     phoneNums = await users.getPhoneNoByEmpId(user.values[0].empId);
-    console.log(phoneNums);
     if (user.values.length >= 1){
         console.log("User found");
         return res.status(201).json({

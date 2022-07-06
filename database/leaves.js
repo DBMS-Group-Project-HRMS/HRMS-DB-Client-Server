@@ -88,7 +88,6 @@ const getLeaveStatus = (leave_id)=>{
 
 const submitLeave = (req, emp_id)=>{
 
-    console.log(req.body)
     return new Promise((resolve, reject) => {
         sql = "SELECT id FROM leavetype WHERE type = ?";
         res = {

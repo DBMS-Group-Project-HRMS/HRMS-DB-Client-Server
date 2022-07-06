@@ -17,7 +17,6 @@ const getPaygrades = async (req,res)=>{
 }
 
 const assignSupervisor = async (req,re)=>{
-    console.log(req.body);
     db.beginTransaction( err => {
         if (err) {
             console.error("Transaction failed", err);
@@ -54,7 +53,6 @@ const assignSupervisor = async (req,re)=>{
 }
 
 const registerEmployee = async (req,res)=>{
-    console.log(req.body);
     const validation_result = validator.employee_signup(req);
 
     if (validation_result.status) {
@@ -130,7 +128,6 @@ const registerEmployee = async (req,res)=>{
 }
 
 const addJobTitle = async (req,res)=>{
-    console.log(req.body);
     const validation_result = validator.add_job_title(req);
 
     if (validation_result.status) {
@@ -155,7 +152,6 @@ const addJobTitle = async (req,res)=>{
 }
 
 const editPaygrade = async (req,res)=>{
-    console.log(req.body);
     
     const updateStatus = await setData.updatePaygrade(req.body);
 

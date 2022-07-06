@@ -179,7 +179,6 @@ const getEmployeeCountByGrouping = (parameter) => {
             status: true,
         };  
         db.query(sql, [parameter, parameter], function (error, results) {
-            console.log(results);
             if (error) {
                 console.log(error);
                 res.status = false;

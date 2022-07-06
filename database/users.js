@@ -8,7 +8,6 @@ const registerUser = async (req)=>{
     var emergency_contact_Id="";
     var emplo_Id="";
     let data = req.body;
-    console.log(data);
     
     res = {
         values: [],
@@ -36,7 +35,6 @@ const registerUser = async (req)=>{
                     res.status=false;
                     return;
                 }else{
-                    console.log(result);
                     u_Id = result.insertId;
 
                     const sqlinsert_address = "INSERT INTO address (Line1,Line2,City,District,Postal_Code) VALUES (?,?,?,?,?)";
@@ -269,7 +267,6 @@ const getEmployee = (user_id)=>{
             }
             results[0].birthday = results[0].birthday.toISOString().slice(0, 10);
             results[0].Joined_date = results[0].Joined_date.toISOString().slice(0, 10);
-            console.log(results);
             res.values = results;
             resolve(res);
         });
@@ -322,7 +319,6 @@ const getEmployeeList = ()=>{
                 res.status = false;
                 resolve(res);
             }
-            console.log(results);
             res.values = results;
             resolve(res);
         });
@@ -376,7 +372,6 @@ const getSupervisor= ()=>{
             }
             results[0].birthday = results[0].birthday.toISOString().slice(0, 10);
             results[0].Joined_date = results[0].Joined_date.toISOString().slice(0, 10);
-            console.log(results);
             res.values = results;
             resolve(res);
         });
@@ -397,7 +392,6 @@ const getPhoneNoByEmpId = (emp_id)=>{
                 res.status = false;
                 resolve(res);
             }
-            console.log(results);
             res.values = results;
             resolve(res);
         });

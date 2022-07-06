@@ -3,16 +3,9 @@ const getdata = require('../database/getData');
 
 const getLeaveRequests = async (req,res)=>{
 
-    sup_id = await getdata.getEmployeeId(req.user.userId);
-    console.log(sup_id)
-
-    // const paygrades = await getData.getEmployeeId(req.body.user_id);
-     
+    sup_id = await getdata.getEmployeeId(req.user.userId);     
     leaveRequests = await leaves.getLeavesBySupId(sup_id.values[0].ID);
     
-
-    console.log(leaveRequests);
-
     if (res.status){
         return res.status(201).json({
             message: "User " + req.params.user_id + " found",
@@ -62,9 +55,7 @@ const reviewLeaveRequest = async (req,res)=>{
 
 
 const getLeaveData = async (req,res)=>{
-    emp_id = req.params.emp_ID;
-    console.log("employee id", emp_id)
-     
+    emp_id = req.params.emp_ID;     
     leaveData = await leaves.getLeavesData(emp_id);
 
     if (res.status){

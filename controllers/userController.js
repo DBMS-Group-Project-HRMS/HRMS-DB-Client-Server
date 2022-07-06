@@ -3,17 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 exports.user_login = async (req, res) => {
-    // const validation_result = validator.login(req);
-  
-    // if (validation_result.status) {
-    //   return res.status(400).json({
-    //     message: validation_result.message,
-    //   });
-    // }
+
     let user = await users.getUserByUsername(req.body.username);
-    
-    console.log(req.body)
-    console.log(user)
   
     if (!user.status) {
       return res.status(502).json({
