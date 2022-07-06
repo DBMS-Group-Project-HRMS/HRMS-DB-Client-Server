@@ -7,6 +7,7 @@ const hrRoutes = require('./routes/hrRoutes');
 const managerRoutes = require('./routes/managerRoutes');
 const supervisorRoutes = require('./routes/supervisorRoutes');
 const userRoutes = require('./routes/userRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 const {verifyToken, hasPaygrade}  = require("./middleware/auth");
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/hr', verifyToken, hasPaygrade(['level 4']), hrRoutes);
 app.use('/manager', verifyToken, managerRoutes);
 app.use('/supervisor', verifyToken, hasPaygrade(['level 2']), supervisorRoutes);
 app.use('/user', userRoutes);
+app.use('/report', verifyToken, hasPaygrade(['level 3']), reportRoutes)
 
 app.listen(port, () => {
 console.log(`Listening on port ${port}`)
