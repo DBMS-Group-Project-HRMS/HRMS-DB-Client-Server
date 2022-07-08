@@ -59,7 +59,7 @@ const getCurrentUserName = (id) => {
 
 const getUserDataByDepartment = (department) => {
     return new Promise((resolve, reject) => {
-        sql = "SELECT ID, `Employee Name`, Email, `Joined Date`, `Employee Type`, `Employee Status`, Paygrade FROM employee_by_department WHERE Department = ?;";
+        sql = "SELECT ID, `Employee Name`, Email, `Joined Date`, `Employee Type`, `Employee Status`, Paygrade FROM employee_by_department WHERE Department = ? ORDER BY ID;";
         res = {
             values: [],
             status: true,
@@ -135,7 +135,7 @@ const getEmployeeAndSupervisorParameterList = () => {
 
 const getEmployeesAndSupervisors = () => {
     return new Promise((resolve, reject) => {
-        sql = "SELECT * FROM `employee_and_supervisor`;";
+        sql = "SELECT * FROM `employee_and_supervisor` ORDER BY `employee_and_supervisor`.`Employee ID`;";
         res = {
             values: [],
             status: true,
@@ -173,12 +173,12 @@ const getGroupEmployeesReportParameters = () => {
 
 const getEmployeeCountByGrouping = (parameter) => {
     return new Promise((resolve, reject) => {
-        sql = "SELECT ?, COUNT(user_Id) as `Employee Count` FROM `employee_grouping` GROUP BY ?;";
+        sql = "SELECT `"+parameter+"` , COUNT(user_Id) as `Employee Count` FROM `employee_grouping` GROUP BY `"+parameter+"` ;";
         res = {
             values: [],
             status: true,
         };  
-        db.query(sql, [parameter, parameter], function (error, results) {
+        db.query(sql, function (error, results) {
             if (error) {
                 console.log(error);
                 res.status = false;
