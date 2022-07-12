@@ -325,53 +325,19 @@ const getEmployeeList = ()=>{
     });
 }
 
-const getSupervisor= ()=>{
+const getSupervisor= (emp_id)=>{
     return new Promise((resolve, reject) => {
-        sql = `SELECT 
-                \`user\`.id,
-                employee.firstname,
-                employee.lastname,
-                employee.birthday,
-                employee.email,
-                employee.salary,
-                employee.Joined_date,
-                employee.nic_number,
-                employee.photo,
-                employee.leave_count,
-                department.name dept_name,
-                maritalstatus.status,
-                address.line1,
-                address.line2,
-                address.city,
-                address.district,
-                address.postal_code,
-                emptype.type,
-                paygrade.paygrade,
-                empstatus.status,
-                emergencycontact.name,
-                emergencycontact.phone_number,
-                emergencycontact.relationship 
-                FROM \`user\` JOIN employee JOIN department JOIN maritalstatus JOIN address JOIN emptype JOIN paygrade JOIN empstatus JOIN emergencycontact ON 
-                \`user\`.id = employee.user_id AND 
-                department.id = employee.department AND 
-                maritalstatus.id = employee.maritalStatus AND 
-                address.id = employee.address AND 
-                emptype.id = employee.type AND 
-                paygrade.id = employee.paygrade AND 
-                empstatus.id = employee.empStatus AND 
-                emergencycontact.id = employee.emergency_contact;`;
+        sql = "SELECT * FROM `supervisor` JOIN employee ON supervisor.Sup_Id = employee.ID WHERE supervisor.Emp_Id = ?;";
         res = {
             values: [],
             status: true,
         };  
-        db.query(sql, function (error, results) {
+        db.query(sql,[emp_id], function (error, results) {
             if (error) {
                 console.log(error);
                 res.status = false;
                 resolve(res);
             }
-            results[0].birthday = results[0].birthday.toISOString().slice(0, 10);
-            results[0].Joined_date = results[0].Joined_date.toISOString().slice(0, 10);
             res.values = results;
             resolve(res);
         });
@@ -597,5 +563,6 @@ module.exports = {
     getPhoneNoByEmpId,
     updateUser,
     isSupervisor,
-    getSupervisorList
+    getSupervisorList,
+    getSupervisor
 }
