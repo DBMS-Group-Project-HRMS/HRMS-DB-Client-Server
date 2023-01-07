@@ -12,29 +12,38 @@ var mysql = require('mysql');
 //   multipleStatements: true
 // });
 
-
-var config =
-{
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    port: 3306,
-    ssl: {ca: fs.readFileSync(__dirname +'/DigiCertGlobalRootCA.crt.pem')}
-};
-
-const con = new mysql.createConnection(config);
-
-con.connect(
-    function (err) { 
-    if (err) { 
-        console.log("!!! Cannot connect !!! Error:");
-        throw err;
-    }
-    else
-    {
-       console.log("Connection established.");
-    }
+var con = mysql.createConnection({
+  port: "3306",
+  host: "sql6.freesqldatabase.com",
+  user: "sql6588607",
+  password: "WzKlw9hlEg",
+  database: "sql6588607",
+  multipleStatements: true
 });
+
+
+// var config =
+// {
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_DATABASE,
+//     port: 3306,
+//     ssl: {ca: fs.readFileSync(__dirname +'/DigiCertGlobalRootCA.crt.pem')}
+// };
+
+//const con = new mysql.createConnection(config);
+
+// con.connect(
+//     function (err) { 
+//     if (err) { 
+//         console.log("!!! Cannot connect !!! Error:");
+//         throw err;
+//     }
+//     else
+//     {
+//        console.log("Connection established.");
+//     }
+// });
 
 module.exports = con;

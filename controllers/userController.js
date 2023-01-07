@@ -1,6 +1,7 @@
 const users = require('../database/users');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const enc = require('../middleware/encryptionHandler');
 
 exports.user_login = async (req, res) => {
 
